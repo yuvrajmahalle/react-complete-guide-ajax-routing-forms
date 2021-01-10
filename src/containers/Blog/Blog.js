@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 import './Blog.css';
 import Posts from './Posts/Posts';
 import {Route,NavLink,Switch, Redirect} from 'react-router-dom';
-import NewPost from './NewPost/NewPost';
+//import NewPost from './NewPost/NewPost';
+import asyncComponent from '../../hoc/asyncComponent';
 
+const  AsyncNewPost = asyncComponent(() => {
+    return import('./NewPost/NewPost');
+})
 
 
 class Blog extends Component {
@@ -29,9 +33,12 @@ class Blog extends Component {
                 <Route path="/"  render={()=> <h1>Home 2</h1>}/>*/}
 
                 <Switch>
-                    <Route path="/new-post" component={NewPost} />
+                    <Route path="/new-post" component={AsyncNewPost} />
                     <Route path="/posts" component={Posts} />
-                    <Redirect from="/" to="/posts" />
+
+                    <Route render={()=> <h1>404 page (Not Found)</h1>} />
+
+                    {/*<Redirect from="/" to="/posts" />*/}
                    
                 </Switch>
                      
